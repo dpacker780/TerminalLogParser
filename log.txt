@@ -1,0 +1,107 @@
+[15:21:49.586][ DEBUG]: Swapchain created with 2 images.                                                | Helix.cpp -> initSwapchain(): 421
+[15:21:49.587][ DEBUG]: Allocated 2 command buffers.                                                    | RenderFrames.cpp -> create(): 72
+[15:21:49.636][ DEBUG]: Rebuilding swapchain: 2 images, resetting all layouts to eUndefined             | Swapchain.cpp -> populateSwapchainImages(): 341
+[15:21:49.637][ DEBUG]: Image[0] layout reset to: Undefined                                             | Swapchain.cpp -> populateSwapchainImages(): 371
+[15:21:49.637][ DEBUG]: Image[1] layout reset to: Undefined                                             | Swapchain.cpp -> populateSwapchainImages(): 371
+[15:21:49.638][ DEBUG]: Image index reset to 0 after rebuild - will be updated by next acquisition      | Swapchain.cpp -> populateSwapchainImages(): 377
+[15:21:49.638][FOOTER]: <<<<<<<< Swapchain Init complete                                                | Helix.cpp -> init(): 193
+[15:21:49.638][HEADER]: >>>>>>>> Creating RenderOrchestrator                                            | Helix.cpp -> init(): 196
+[15:21:49.639][HEADER]: >>>>>>>> Creating PipelineManager                                               | RenderOrchestrator.cpp -> RenderOrchestrator(): 63
+[15:21:49.640][ DEBUG]: Resource Descriptor Buffer created with size: 2097216 (requested: 2097152)      | DescriptorBufferManager.cpp -> initialize(): 47
+[15:21:49.640][ DEBUG]: Sampler Descriptor Buffer created with size: 1048640 (requested: 1048576)       | DescriptorBufferManager.cpp -> initialize(): 68
+[15:21:49.640][ DEBUG]: PipelineManager initialized with DescriptorBufferManager.                       | PipelineManager.cpp -> PipelineManager(): 16
+[15:21:49.641][FOOTER]: <<<<<<<< PipelineManager Init complete                                          | RenderOrchestrator.cpp -> RenderOrchestrator(): 66
+[15:21:49.641][ DEBUG]: RenderOrchestrator created (call initialize() after Services are ready)         | RenderOrchestrator.cpp -> RenderOrchestrator(): 88
+[15:21:49.641][FOOTER]: <<<<<<<< RenderOrchestrator Init complete                                       | Helix.cpp -> init(): 199
+[15:21:49.642][HEADER]: >>>>>>>> RenderOrchestrator Architecture Status                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1805
+[15:21:49.642][  INFO]: Multi-phase rendering system active                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1806
+[15:21:49.642][  INFO]: Enabled phases:                                                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1807
+[15:21:49.643][  INFO]:   Γ£ô Setup                                                                     | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Frustum Culling                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Shadow Mapping                                                            | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Skybox                                                                    | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô Infinite Ground                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô UI Overlay                                                                | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô Presentation                                                              | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]: Disabled phases (future features):                                              | RenderOrchestrator.cpp -> logArchitectureStatus(): 1817
+[15:21:49.645][  INFO]:   Γùï Cluster Generation                                                        | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï Light Culling                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï G-Buffer Pass                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï Forward Clustered                                                         | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Lighting Pass                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Forward Transparent                                                       | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Post Processing                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.647][  INFO]: Performance logging: disabled                                                   | RenderOrchestrator.cpp -> logArchitectureStatus(): 1826
+[15:21:49.647][  INFO]: Phase logging: disabled                                                         | RenderOrchestrator.cpp -> logArchitectureStatus(): 1827
+[15:21:49.647][  INFO]: Total frames processed: 0                                                       | RenderOrchestrator.cpp -> logArchitectureStatus(): 1828
+[15:21:49.648][FOOTER]: <<<<<<<< RenderOrchestrator Architecture Status                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1829
+[15:21:49.648][HEADER]: >>>>>>>> Creating Render Safe Queue                                             | Helix.cpp -> init(): 210
+[15:21:49.648][FOOTER]: <<<<<<<< Render Safe Queue created.                                             | Helix.cpp -> init(): 214
+[15:21:49.648][HEADER]: >>>>>>>> Creating TextureManager                                                | Helix.cpp -> init(): 217
+[15:21:49.649][ DEBUG]: TextureManager: Creating with max textures: 4096                                | TextureManager.cpp -> TextureManager(): 61
+[15:21:49.649][  WARN]: TextureManager: Clamping max textures to 2048                                   | TextureManager.cpp -> TextureManager(): 72
+[15:21:49.649][ DEBUG]: TextureManager: Creating default textures                                       | TextureManager.cpp -> createDefaultTextures(): 120
+[15:21:49.650][ DEBUG]: Sampler 'DefaultAlbedo_Sampler' created successfully.                           | Sampler.cpp -> Sampler(): 175
+[15:21:49.653][ DEBUG]: Image2D 'DefaultAlbedo': Sampler set successfully.                              | Image2D.cpp -> setSampler(): 138
+[15:21:49.667][ DEBUG]: Created default texture 'DefaultAlbedo' (1x1)                                   | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.667][ DEBUG]>  At index 0 with color [128, 128, 128, 255]                                     | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.667][ DEBUG]: Sampler 'DefaultNormal_Sampler' created successfully.                           | Sampler.cpp -> Sampler(): 175
+[15:21:49.668][ DEBUG]: Image2D 'DefaultNormal': Sampler set successfully.                              | Image2D.cpp -> setSampler(): 138
+[15:21:49.669][ DEBUG]: Created default texture 'DefaultNormal' (1x1)                                   | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.669][ DEBUG]>  At index 1 with color [128, 128, 255, 255]                                     | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.670][ DEBUG]: Sampler 'DefaultWhite_Sampler' created successfully.                            | Sampler.cpp -> Sampler(): 175
+[15:21:49.670][ DEBUG]: Image2D 'DefaultWhite': Sampler set successfully.                               | Image2D.cpp -> setSampler(): 138
+[15:21:49.671][ DEBUG]: Created default texture 'DefaultWhite' (1x1)                                    | TextureManager.cpp -> createDefaultTexture(): 256[15:21:49.586][ DEBUG]: Swapchain created with 2 images.                                                | Helix.cpp -> initSwapchain(): 421
+[15:21:49.587][ DEBUG]: Allocated 2 command buffers.                                                    | RenderFrames.cpp -> create(): 72
+[15:21:49.636][ DEBUG]: Rebuilding swapchain: 2 images, resetting all layouts to eUndefined             | Swapchain.cpp -> populateSwapchainImages(): 341
+[15:21:49.637][ DEBUG]: Image[0] layout reset to: Undefined                                             | Swapchain.cpp -> populateSwapchainImages(): 371
+[15:21:49.637][ DEBUG]: Image[1] layout reset to: Undefined                                             | Swapchain.cpp -> populateSwapchainImages(): 371
+[15:21:49.638][ DEBUG]: Image index reset to 0 after rebuild - will be updated by next acquisition      | Swapchain.cpp -> populateSwapchainImages(): 377
+[15:21:49.638][FOOTER]: <<<<<<<< Swapchain Init complete                                                | Helix.cpp -> init(): 193
+[15:21:49.638][HEADER]: >>>>>>>> Creating RenderOrchestrator                                            | Helix.cpp -> init(): 196
+[15:21:49.639][HEADER]: >>>>>>>> Creating PipelineManager                                               | RenderOrchestrator.cpp -> RenderOrchestrator(): 63
+[15:21:49.640][ DEBUG]: Resource Descriptor Buffer created with size: 2097216 (requested: 2097152)      | DescriptorBufferManager.cpp -> initialize(): 47
+[15:21:49.640][ DEBUG]: Sampler Descriptor Buffer created with size: 1048640 (requested: 1048576)       | DescriptorBufferManager.cpp -> initialize(): 68
+[15:21:49.640][ DEBUG]: PipelineManager initialized with DescriptorBufferManager.                       | PipelineManager.cpp -> PipelineManager(): 16
+[15:21:49.641][FOOTER]: <<<<<<<< PipelineManager Init complete                                          | RenderOrchestrator.cpp -> RenderOrchestrator(): 66
+[15:21:49.641][ DEBUG]: RenderOrchestrator created (call initialize() after Services are ready)         | RenderOrchestrator.cpp -> RenderOrchestrator(): 88
+[15:21:49.641][FOOTER]: <<<<<<<< RenderOrchestrator Init complete                                       | Helix.cpp -> init(): 199
+[15:21:49.642][HEADER]: >>>>>>>> RenderOrchestrator Architecture Status                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1805
+[15:21:49.642][  INFO]: Multi-phase rendering system active                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1806
+[15:21:49.642][  INFO]: Enabled phases:                                                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1807
+[15:21:49.643][  INFO]:   Γ£ô Setup                                                                     | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Frustum Culling                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Shadow Mapping                                                            | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.643][  INFO]:   Γ£ô Skybox                                                                    | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô Infinite Ground                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô UI Overlay                                                                | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]:   Γ£ô Presentation                                                              | RenderOrchestrator.cpp -> logArchitectureStatus(): 1813
+[15:21:49.644][  INFO]: Disabled phases (future features):                                              | RenderOrchestrator.cpp -> logArchitectureStatus(): 1817
+[15:21:49.645][  INFO]:   Γùï Cluster Generation                                                        | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï Light Culling                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï G-Buffer Pass                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.645][  INFO]:   Γùï Forward Clustered                                                         | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Lighting Pass                                                             | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Forward Transparent                                                       | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.646][  INFO]:   Γùï Post Processing                                                           | RenderOrchestrator.cpp -> logArchitectureStatus(): 1822
+[15:21:49.647][  INFO]: Performance logging: disabled                                                   | RenderOrchestrator.cpp -> logArchitectureStatus(): 1826
+[15:21:49.647][  INFO]: Phase logging: disabled                                                         | RenderOrchestrator.cpp -> logArchitectureStatus(): 1827
+[15:21:49.647][  INFO]: Total frames processed: 0                                                       | RenderOrchestrator.cpp -> logArchitectureStatus(): 1828
+[15:21:49.648][FOOTER]: <<<<<<<< RenderOrchestrator Architecture Status                                 | RenderOrchestrator.cpp -> logArchitectureStatus(): 1829
+[15:21:49.648][HEADER]: >>>>>>>> Creating Render Safe Queue                                             | Helix.cpp -> init(): 210
+[15:21:49.648][FOOTER]: <<<<<<<< Render Safe Queue created.                                             | Helix.cpp -> init(): 214
+[15:21:49.648][HEADER]: >>>>>>>> Creating TextureManager                                                | Helix.cpp -> init(): 217
+[15:21:49.649][ DEBUG]: TextureManager: Creating with max textures: 4096                                | TextureManager.cpp -> TextureManager(): 61
+[15:21:49.649][  WARN]: TextureManager: Clamping max textures to 2048                                   | TextureManager.cpp -> TextureManager(): 72
+[15:21:49.649][ DEBUG]: TextureManager: Creating default textures                                       | TextureManager.cpp -> createDefaultTextures(): 120
+[15:21:49.650][ DEBUG]: Sampler 'DefaultAlbedo_Sampler' created successfully.                           | Sampler.cpp -> Sampler(): 175
+[15:21:49.653][ DEBUG]: Image2D 'DefaultAlbedo': Sampler set successfully.                              | Image2D.cpp -> setSampler(): 138
+[15:21:49.667][ DEBUG]: Created default texture 'DefaultAlbedo' (1x1)                                   | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.667][ DEBUG]>  At index 0 with color [128, 128, 128, 255]                                     | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.667][ DEBUG]: Sampler 'DefaultNormal_Sampler' created successfully.                           | Sampler.cpp -> Sampler(): 175
+[15:21:49.668][ DEBUG]: Image2D 'DefaultNormal': Sampler set successfully.                              | Image2D.cpp -> setSampler(): 138
+[15:21:49.669][ DEBUG]: Created default texture 'DefaultNormal' (1x1)                                   | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.669][ DEBUG]>  At index 1 with color [128, 128, 255, 255]                                     | TextureManager.cpp -> createDefaultTexture(): 256
+[15:21:49.670][ DEBUG]: Sampler 'DefaultWhite_Sampler' created successfully.                            | Sampler.cpp -> Sampler(): 175
+[15:21:49.670][ DEBUG]: Image2D 'DefaultWhite': Sampler set successfully.                               | Image2D.cpp -> setSampler(): 138
+[15:21:49.671][ DEBUG]: Created default texture 'DefaultWhite' (1x1)                                    | TextureManager.cpp -> createDefaultTexture(): 256
