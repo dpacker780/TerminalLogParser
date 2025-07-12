@@ -115,6 +115,7 @@ int main() {
     // Application state
     // -------------------------------------------------------------------------
     std::vector<LogEntry> log_entries;
+    std::mutex log_entries_mutex;
     std::string input_file_path = loadLastFilePath();
     std::string search_term;
     std::string status_message = "Ready";
@@ -132,21 +133,27 @@ int main() {
     auto input_file = Input(&input_file_path, "path/to/log.txt");
     auto input_search = Input(&search_term, "search term");
     
+    // Create parser instance
+    LogParser parser;
+    
     auto parse_button = Button("Open", [&] {
-        status_message = "0%";
-        
-        // Parse the log file
-        LogParser parser;
-        log_entries = parser.parse(input_file_path);
-        
-        if (!log_entries.empty()) {
-            saveLastFilePath(input_file_path);
-            status_message = "File complete with " + std::to_string(log_entries.size()) + " entries";
-            // Set focus to search field after successful load
-            input_search->TakeFocus();
-        } else {
-            status_message = "No entries found or file error";
+        // Clear existing entries
+        {
+            std::lock_guard<std::mutex> lock(log_entries_mutex);
+            log_entries.clear();
         }
+        scroll_y = 0;
+        
+        // Start async parsing with progress callback
+        parser.parseAsync(input_file_path, log_entries, log_entries_mutex, 
+                         [&](const std::string& progress) {
+                             status_message = progress;
+                             // Force UI refresh
+                             screen.PostEvent(Event::Custom);
+                         });
+        
+        saveLastFilePath(input_file_path);
+        input_search->TakeFocus();
     });
     
     auto checkbox_debug = Checkbox("DEBUG", &show_debug);
@@ -244,8 +251,15 @@ int main() {
         std::vector<size_t> filtered_indices;
         bool any_filter_checked = show_debug || show_info || show_warn || show_error;
         
-        for (size_t i = 0; i < log_entries.size(); ++i) {
-            const auto& entry = log_entries[i];
+        // Thread-safe access to log entries
+        std::vector<LogEntry> local_entries;
+        {
+            std::lock_guard<std::mutex> lock(log_entries_mutex);
+            local_entries = log_entries;  // Make a copy for processing
+        }
+        
+        for (size_t i = 0; i < local_entries.size(); ++i) {
+            const auto& entry = local_entries[i];
             // Apply level filters
             bool level_matches = !any_filter_checked || 
                 (show_debug && entry.level == LogLevel::DEBUG) ||
@@ -292,7 +306,7 @@ int main() {
         // Create log rows only for visible entries
         Elements log_rows;
         for (int i = start_idx; i < end_idx; ++i) {
-            const auto& entry = log_entries[filtered_indices[i]];
+            const auto& entry = local_entries[filtered_indices[i]];
             std::string source_info = entry.source_file + ":" + std::to_string(entry.source_line);
             
             auto log_row = hbox({
@@ -312,7 +326,7 @@ int main() {
             : vbox(std::move(log_rows)) | vscroll_indicator | frame;
 
         std::string log_status = "Showing " + std::to_string(total_filtered) + 
-                               " of " + std::to_string(log_entries.size()) + " entries";
+                               " of " + std::to_string(local_entries.size()) + " entries";
         
         // Add scroll position indicator for large datasets
         std::string scroll_info = "";
@@ -368,7 +382,7 @@ int main() {
         return vbox({
             file_renderer->Render() | size(HEIGHT, EQUAL, 5),
             separator(),
-            log_renderer->Render() | size(HEIGHT, LESS_THAN, 50),
+            log_renderer->Render() | size(HEIGHT, EQUAL, 50),
             separator(),
             search_renderer->Render() | size(HEIGHT, EQUAL, 6),
         });
@@ -387,5 +401,8 @@ int main() {
     // Run the application
     // -------------------------------------------------------------------------
     screen.Loop(escape_handler);
+    
+    // Clean up parser thread before exit
+    parser.stopParsing();
     return 0;
 }
