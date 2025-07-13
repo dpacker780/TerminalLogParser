@@ -11,6 +11,7 @@
 *.sln.docstates
 CLAUDE.md
 logreader_config.txt
+.claude/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
