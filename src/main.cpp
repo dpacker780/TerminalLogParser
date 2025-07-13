@@ -18,6 +18,8 @@
 #undef ERROR
 #undef RGB
 #undef DOUBLE
+#else
+#include <cstdlib>
 #endif
 
 using namespace ftxui;
@@ -70,6 +72,45 @@ void saveLastFilePath(const std::string& path) {
         config << path;
         config.close();
     }
+}
+
+// =============================================================================
+// Clipboard functionality
+// =============================================================================
+
+bool copyToClipboard(const std::string& text) {
+#ifdef _WIN32
+    if (!OpenClipboard(nullptr)) {
+        return false;
+    }
+    
+    EmptyClipboard();
+    
+    size_t size = (text.length() + 1) * sizeof(char);
+    HGLOBAL hClipboardData = GlobalAlloc(GMEM_MOVEABLE, size);
+    if (!hClipboardData) {
+        CloseClipboard();
+        return false;
+    }
+    
+    char* pchData = static_cast<char*>(GlobalLock(hClipboardData));
+    if (!pchData) {
+        GlobalFree(hClipboardData);
+        CloseClipboard();
+        return false;
+    }
+    
+    strcpy_s(pchData, size, text.c_str());
+    GlobalUnlock(hClipboardData);
+    
+    SetClipboardData(CF_TEXT, hClipboardData);
+    CloseClipboard();
+    return true;
+#else
+    // Linux: Use xclip if available, otherwise try xsel
+    std::string command = "echo '" + text + "' | xclip -selection clipboard 2>/dev/null || echo '" + text + "' | xsel --clipboard --input 2>/dev/null";
+    return system(command.c_str()) == 0;
+#endif
 }
 
 // =============================================================================
@@ -156,6 +197,53 @@ int main() {
         input_search->TakeFocus();
     });
     
+    auto copy_button = Button("Copy Filtered", [&] {
+        // Get filtered entries (same logic as in log renderer)
+        std::vector<LogEntry> filtered_entries;
+        bool any_filter_checked = show_debug || show_info || show_warn || show_error;
+        
+        // Thread-safe access to log entries
+        std::vector<LogEntry> local_entries;
+        {
+            std::lock_guard<std::mutex> lock(log_entries_mutex);
+            local_entries = log_entries;
+        }
+        
+        for (const auto& entry : local_entries) {
+            // Apply level filters
+            bool level_matches = !any_filter_checked || 
+                (show_debug && entry.level == LogLevel::DEBUG) ||
+                (show_info && entry.level == LogLevel::INFO) ||
+                (show_warn && entry.level == LogLevel::WARN) ||
+                (show_error && entry.level == LogLevel::ERROR);
+            
+            if (!level_matches) continue;
+            
+            // Apply search filter
+            if (!search_term.empty() && 
+                entry.message.find(search_term) == std::string::npos) {
+                continue;
+            }
+            
+            filtered_entries.push_back(entry);
+        }
+        
+        // Build clipboard text
+        std::string clipboard_text;
+        for (const auto& entry : filtered_entries) {
+            std::string source_info = entry.source_file + ":" + std::to_string(entry.source_line);
+            clipboard_text += "[" + entry.timestamp + "][" + LogLevelToString(entry.level) + "]: " + 
+                             entry.message + " | " + source_info + "\n";
+        }
+        
+        if (copyToClipboard(clipboard_text)) {
+            status_message = "Copied " + std::to_string(filtered_entries.size()) + " entries to clipboard";
+        } else {
+            status_message = "Failed to copy to clipboard";
+        }
+        screen.PostEvent(Event::Custom);
+    });
+    
     auto checkbox_debug = Checkbox("DEBUG", &show_debug);
     auto checkbox_info = Checkbox("INFO", &show_info);
     auto checkbox_warn = Checkbox("WARN", &show_warn);
@@ -165,10 +253,11 @@ int main() {
     // Container structure
     // -------------------------------------------------------------------------
     
-    // File controls: Input field and Open button
+    // File controls: Input field, Open button, and Copy button
     auto file_controls_container = Container::Horizontal({
         input_file,
         parse_button,
+        copy_button,
     });
 
     // Search and filter controls
@@ -231,10 +320,14 @@ int main() {
             }),
         });
         
-        // Right side: Open button
+        // Right side: Open and Copy buttons
         auto right_section = vbox({
             filler(),
-            parse_button->Render(),
+            hbox({
+                parse_button->Render(),
+                text("  "),
+                copy_button->Render(),
+            }),
             filler(),
         });
         
