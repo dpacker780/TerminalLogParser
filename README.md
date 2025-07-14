@@ -1,5 +1,6 @@
 # LogReader
 
+
 A cross-platform terminal-based log file viewer with real-time filtering and search capabilities.
 
 ## Features
