@@ -1,5 +1,6 @@
 # LogReader
 
+![LogReader Terminal Image](https://github.com/dpacker780/TerminalLogParser/blob/master/logreader.png)
 
 A cross-platform terminal-based log file viewer with real-time filtering and search capabilities.
 
